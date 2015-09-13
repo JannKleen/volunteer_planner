@@ -8,7 +8,6 @@ from django.template.loader import render_to_string
 from scheduler.models import Need, Location, Topics, TimePeriods
 from dateutil.parser import *
 from shiftmailer.models import Mailer
-import ipdb
 import codecs
 from shiftmailer.excelexport import GenerateExcelSheet
 

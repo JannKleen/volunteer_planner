@@ -6,7 +6,6 @@ import datetime
 from datetime import date, timedelta
 from scheduler.models import Need, Location, Topics, TimePeriods
 from dateutil.parser import *
-import ipdb
 
 
 class Command(BaseCommand):
