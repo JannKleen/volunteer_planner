@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-# Register your models here.
+
 from ckeditor.widgets import CKEditorWidget
 from .models import Notification
 

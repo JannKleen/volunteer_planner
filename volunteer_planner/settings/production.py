@@ -1,4 +1,4 @@
-from .base import *
+from .base import *  # noqa
 
 DEBUG = os.environ.get('BETA', False)
 
@@ -46,4 +46,3 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
-# ssd

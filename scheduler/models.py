@@ -65,11 +65,9 @@ class Need(models.Model):
             # Event is shorter than 2 * grace time, can't have overlaps.
             return []
 
-        return [
-            need for need in needs
-            if (need.start < latest_start_time < need.end) or
-               (latest_start_time < need.start < earliest_end_time)
-        ]
+        return [need for need in needs
+                if (need.start < latest_start_time < need.end) or
+                (latest_start_time < need.start < earliest_end_time)]
 
     def __unicode__(self):
         return '{title} - {location} ({start} - {end})'.format(

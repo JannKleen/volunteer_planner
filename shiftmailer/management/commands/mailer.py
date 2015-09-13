@@ -1,14 +1,10 @@
-import os
-
-from django.conf import settings
 from django.core.management.base import BaseCommand
-import datetime
-from datetime import date, timedelta
 from django.template.loader import render_to_string
-from scheduler.models import Need, Location, Topics, TimePeriods
-from dateutil.parser import *
+
+import datetime
+
+from scheduler.models import Need
 from shiftmailer.models import Mailer
-import codecs
 from shiftmailer.excelexport import GenerateExcelSheet
 
 

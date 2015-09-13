@@ -1,8 +1,7 @@
-import os
-
-from django.conf import settings
 from django.core.management.base import BaseCommand
+
 import datetime
+
 from registration.models import RegistrationProfile
 
 
@@ -21,4 +20,4 @@ class Command(BaseCommand):
             for single_shift in theshift:
                 deelta = single_shift.time_period_to.date_time - single_shift.time_period_from.date_time
                 seconds += deelta.total_seconds()
-        print int(((seconds/60)/60))
+        print int(((seconds / 60) / 60))

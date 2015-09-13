@@ -1,12 +1,11 @@
 import json
 from django.http.response import HttpResponse
-from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
-from scheduler.models import Location, Need, Topics, TimePeriods
+from scheduler.models import Location, Need, TimePeriods
 from dateutil.parser import parse
-from .models import BluePrintCreator, NeedBluePrint
+from .models import BluePrintCreator
 
 
 class SuperuserRequiredMixin(object):

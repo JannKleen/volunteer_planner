@@ -80,11 +80,13 @@ class PlannerView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(PlannerView, self).get_context_data(**kwargs)
-        context['needs'] = Need.objects.filter(location__pk=self.kwargs['pk'])\
-                .filter(time_period_to__date_time__year=self.kwargs['year'],
-                        time_period_to__date_time__month=self.kwargs['month'],
-                        time_period_to__date_time__day=self.kwargs['day'])\
-                .order_by('topic', 'time_period_to__date_time')
+        context['needs'] = \
+            Need.objects.filter(
+                location__pk=self.kwargs['pk'],
+                time_period_to__date_time__year=self.kwargs['year'],
+                time_period_to__date_time__month=self.kwargs['month'],
+                time_period_to__date_time__day=self.kwargs['day'])\
+            .order_by('topic', 'time_period_to__date_time')
         return context
 
     def form_invalid(self, form):

@@ -3,8 +3,8 @@ from django.core.mail import send_mail
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
-
 from . import models
+
 
 @receiver(pre_delete, sender=models.Need)
 def send_email_notifications(sender, instance, **kwargs):

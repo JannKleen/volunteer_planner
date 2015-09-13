@@ -4,7 +4,6 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    # Examples:
     url(r'^auth/', include('registration.urls')),
     url(r'^faq/', TemplateView.as_view(template_name='faq.html'), name='faq'),
     url(r'^', include('scheduler.urls')),

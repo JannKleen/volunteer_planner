@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.contrib.admin.widgets import FilteredSelectMultiple
-# Register your models here.
 from django import forms
+
 from .models import BluePrintCreator, NeedBluePrint
 
 

@@ -1,11 +1,9 @@
-import os
-
-from django.conf import settings
 from django.core.management.base import BaseCommand
+
 import datetime
-from datetime import date, timedelta
+from dateutil.parser import parse
+
 from scheduler.models import Need, Location, Topics, TimePeriods
-from dateutil.parser import *
 
 
 class Command(BaseCommand):
@@ -53,11 +51,3 @@ class Command(BaseCommand):
                         new_row.time_period_to = to_the_time
                         new_row.time_period_from = from_the_time
                         new_row.save()
-                        # ipdb.set_trace()
-
-                    # newtime = date_new +datetime.timedelta(days=1)
-                    # ipdb.set_trace()
-                    # print newtime
-                    # print date.today() + timedelta(days=1)
-                # Need(location=location, topic=topic)
-            # ipdb.set_trace()
