@@ -8,7 +8,7 @@ from registration.models import RegistrationProfile
 
 class Command(BaseCommand):
     help = 'creates bulk shifts from existing data'
-    args = ""
+    args = ''
 
     option_list = BaseCommand.option_list
 

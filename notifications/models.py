@@ -10,9 +10,9 @@ class Notification(models.Model):
     News updates/"Aufrufe" from locations. Displayed where relevant.
     """
     creation_date = models.DateField(auto_now=True)
-    title = models.CharField(max_length=255, verbose_name=_("title"))
-    subtitle = models.CharField(max_length=255, verbose_name=_("subtitle"), null=True, blank=True)
-    text = models.TextField(max_length=20055, verbose_name=_("articletext"))
+    title = models.CharField(max_length=255, verbose_name=_('title'))
+    subtitle = models.CharField(max_length=255, verbose_name=_('subtitle'), null=True, blank=True)
+    text = models.TextField(max_length=20055, verbose_name=_('articletext'))
     slug = models.SlugField(auto_created=True, max_length=255)
     location = models.ForeignKey('scheduler.Location')
 

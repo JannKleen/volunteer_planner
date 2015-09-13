@@ -25,7 +25,7 @@ class LoginRequiredMixin(object):
 
 
 class HomeView(TemplateView):
-    template_name = "home.html"
+    template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated():
@@ -44,7 +44,7 @@ class HelpDesk(LoginRequiredMixin, TemplateView):
     """
     Location overview. First view that a volunteer gets redirected to when they log in.
     """
-    template_name = "helpdesk.html"
+    template_name = 'helpdesk.html'
 
     def get_context_data(self, **kwargs):
         context = super(HelpDesk, self).get_context_data(**kwargs)
@@ -62,7 +62,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
     Maik isn't sure if this is linked to from anywhere. The template looks nasty.
     """
     fields = ['first_name', 'last_name', 'email']
-    template_name = "profile_edit.html"
+    template_name = 'profile_edit.html'
     success_url = reverse_lazy('helpdesk')
 
     def get_object(self, queryset=None):
@@ -75,7 +75,7 @@ class PlannerView(LoginRequiredMixin, FormView):
     It'll show all the available needs, and they can add and remove
     themselves from needs.
     """
-    template_name = "helpdesk_single.html"
+    template_name = 'helpdesk_single.html'
     form_class = RegisterForNeedForm
 
     def get_context_data(self, **kwargs):
@@ -102,7 +102,7 @@ class PlannerView(LoginRequiredMixin, FormView):
                 # Casting the list of conflicts to a string is lazy.
                 messages.warning(self.request, msg % conflicts)
             else:
-                messages.success(self.request, _("You were successfully added to this shift."))
+                messages.success(self.request, _('You were successfully added to this shift.'))
                 reg_profile.needs.add(need)
         elif form.cleaned_data['action'] == RegisterForNeedForm.REMOVE:
             reg_profile.needs.remove(need)

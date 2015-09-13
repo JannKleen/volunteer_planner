@@ -7,7 +7,7 @@ import datetime
 
 class Command(BaseCommand):
     help = 'dump complete database as sql'
-    args = ""
+    args = ''
 
     option_list = BaseCommand.option_list
 

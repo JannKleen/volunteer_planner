@@ -188,8 +188,8 @@ class RegistrationManager(models.Manager):
 
 class RegistrationProfile(models.Model):
     class Meta:
-        verbose_name = "Freiwillige"
-        verbose_name_plural = "Freiwillige"
+        verbose_name = 'Freiwillige'
+        verbose_name_plural = 'Freiwillige'
     """
     A simple profile which stores an activation key for use during
     user account registration.
@@ -205,18 +205,18 @@ class RegistrationProfile(models.Model):
     account registration and activation.
 
     """
-    ACTIVATED = u"ALREADY_ACTIVATED"
+    ACTIVATED = u'ALREADY_ACTIVATED'
 
     user = models.OneToOneField(User, verbose_name=_('user'))
     activation_key = models.CharField(_('activation key'), max_length=40)
 
-    interests = models.ManyToManyField("scheduler.Topics")
-    needs = models.ManyToManyField('scheduler.Need', verbose_name="registrierte Schichten")
+    interests = models.ManyToManyField('scheduler.Topics')
+    needs = models.ManyToManyField('scheduler.Need', verbose_name='registrierte Schichten')
 
     objects = RegistrationManager()
 
     def __unicode__(self):
-        return u"Username:%s Email:%s " % (self.user, self.user.email)
+        return u'Username:%s Email:%s ' % (self.user, self.user.email)
 
     def get_user_email(self):
         return self.user.email

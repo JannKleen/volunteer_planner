@@ -76,7 +76,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 TEMPLATE_DIRS = [
-    os.path.join(PROJECT_ROOT, "templates"),
+    os.path.join(PROJECT_ROOT, 'templates'),
 ]
 
 TEMPLATE_LOADERS = (
@@ -139,6 +139,6 @@ FIXTURE_DIRS = (
     os.path.join(PROJECT_ROOT, 'fixtures'),
 )
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 
-DATE_FORMAT = "l, d.m.Y"
+DATE_FORMAT = 'l, d.m.Y'

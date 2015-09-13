@@ -31,14 +31,14 @@ class RegistrationForm(forms.Form):
 
     username = forms.RegexField(regex=r'^[\w.@+-]+$',
                                 max_length=30,
-                                label=_("Username"),
-                                error_messages={'invalid': _("This value may contain only letters, numbers and "
-                                                             "@/./+/-/_ characters.")})
-    email = forms.EmailField(label=_("E-mail"))
+                                label=_('Username'),
+                                error_messages={'invalid': _('This value may contain only letters, numbers and '
+                                                             '@/./+/-/_ characters.')})
+    email = forms.EmailField(label=_('E-mail'))
     password1 = forms.CharField(widget=forms.PasswordInput,
-                                label=_("Password"))
+                                label=_('Password'))
     password2 = forms.CharField(widget=forms.PasswordInput,
-                                label=_("Password (again)"))
+                                label=_('Password (again)'))
 
     def clean_username(self):
         """
@@ -48,7 +48,7 @@ class RegistrationForm(forms.Form):
         """
         existing = User.objects.filter(username__iexact=self.cleaned_data['username'])
         if existing.exists():
-            raise forms.ValidationError(_("A user with that username already exists."))
+            raise forms.ValidationError(_('A user with that username already exists.'))
         else:
             return self.cleaned_data['username']
 
@@ -62,7 +62,7 @@ class RegistrationForm(forms.Form):
         """
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-                raise forms.ValidationError(u"Die zwei Passwoerter sind nicht gleich!")
+                raise forms.ValidationError(u'Die zwei Passwoerter sind nicht gleich!')
         return self.cleaned_data
 
 
@@ -74,7 +74,7 @@ class RegistrationFormTermsOfService(RegistrationForm):
     """
     tos = forms.BooleanField(widget=forms.CheckboxInput,
                              label=_(u'I have read and agree to the Terms of Service'),
-                             error_messages={'required': _("You must agree to the terms to register")})
+                             error_messages={'required': _('You must agree to the terms to register')})
 
 
 class RegistrationFormUniqueEmail(RegistrationForm):
@@ -90,8 +90,8 @@ class RegistrationFormUniqueEmail(RegistrationForm):
 
         """
         if User.objects.filter(email__iexact=self.cleaned_data['email']):
-            raise forms.ValidationError(_("This email address is already in use. "
-                                          "Please supply a different email address."))
+            raise forms.ValidationError(_('This email address is already in use. '
+                                          'Please supply a different email address.'))
         return self.cleaned_data['email']
 
 
@@ -115,6 +115,6 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
         """
         email_domain = self.cleaned_data['email'].split('@')[1]
         if email_domain in self.bad_domains:
-            raise forms.ValidationError(_("Registration using free email addresses is prohibited. "
-                                          "Please supply a different email address."))
+            raise forms.ValidationError(_('Registration using free email addresses is prohibited. '
+                                          'Please supply a different email address.'))
         return self.cleaned_data['email']

@@ -11,24 +11,24 @@ class Need(models.Model):
     This is the primary instance to create shifts
     """
     class Meta:
-        verbose_name = _("shift")
-        verbose_name_plural = _("shifts")
-    topic = models.ForeignKey("Topics", verbose_name=_("helptype"), help_text=_("helptype_text"))
-    location = models.ForeignKey('Location', verbose_name=_("location"))
-    time_period_from = models.ForeignKey("TimePeriods", related_name="time_from", verbose_name=_("time from"))
-    time_period_to = models.ForeignKey("TimePeriods", related_name="time_to")
+        verbose_name = _('shift')
+        verbose_name_plural = _('shifts')
+    topic = models.ForeignKey('Topics', verbose_name=_('helptype'), help_text=_('helptype_text'))
+    location = models.ForeignKey('Location', verbose_name=_('location'))
+    time_period_from = models.ForeignKey('TimePeriods', related_name='time_from', verbose_name=_('time from'))
+    time_period_to = models.ForeignKey('TimePeriods', related_name='time_to')
 
     # Currently required. If you want to allow not setting this, make sure to update
     # associated logic where slots is used.
-    slots = models.IntegerField(verbose_name=_("number of needed volunteers"))
+    slots = models.IntegerField(verbose_name=_('number of needed volunteers'))
 
     def get_volunteer_total(self):
         return self.registrationprofile_set.all().count()
-    get_volunteer_total.short_description = _("assigned volunteers")
+    get_volunteer_total.short_description = _('assigned volunteers')
 
     def get_volunteers(self):
         return self.registrationprofile_set.all()
-    get_volunteers.short_description = _("volunteers")
+    get_volunteers.short_description = _('volunteers')
 
     # Two properties to make accessing the timestamps slightly saner.
     # TODO: Just remove the ForeignKey relationship and replace with datetime fields, and give
@@ -72,15 +72,15 @@ class Need(models.Model):
         ]
 
     def __unicode__(self):
-        return "{title} - {location} ({start} - {end})".format(
+        return '{title} - {location} ({start} - {end})'.format(
             title=self.topic.title, location=self.location.name,
             start=localize(self.start), end=localize(self.end))
 
 
 class Topics(models.Model):
     class Meta:
-        verbose_name = _("helptype")
-        verbose_name_plural = _("helptypes")
+        verbose_name = _('helptype')
+        verbose_name_plural = _('helptypes')
 
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=20000, blank=True)
@@ -94,8 +94,8 @@ class Topics(models.Model):
 
 class TimePeriods(models.Model):
     class Meta:
-        verbose_name = _("timeperiod")
-        verbose_name_plural = _("timeperiods")
+        verbose_name = _('timeperiod')
+        verbose_name_plural = _('timeperiods')
 
     date_time = models.DateTimeField()
 
@@ -114,10 +114,10 @@ class Location(models.Model):
     additional_info = models.TextField(max_length=300000, blank=True)
 
     class Meta:
-        verbose_name = _("location")
-        verbose_name_plural = _("locations")
+        verbose_name = _('location')
+        verbose_name_plural = _('locations')
         permissions = (
-            ("can_view", "User can view location"),
+            ('can_view', 'User can view location'),
         )
 
     def __unicode__(self):
@@ -127,8 +127,8 @@ class Location(models.Model):
         needs_dates = []
         for i in self.need_set.all().filter(time_period_to__date_time__gt=datetime.datetime.now())\
                 .order_by('time_period_to__date_time'):
-            date_name = i.time_period_from.date_time.strftime("%A, %d.%m.%Y")
+            date_name = i.time_period_from.date_time.strftime('%A, %d.%m.%Y')
             locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
             if date_name not in needs_dates:
-                needs_dates.append(i.time_period_from.date_time.strftime("%A, %d.%m.%Y"))
+                needs_dates.append(i.time_period_from.date_time.strftime('%A, %d.%m.%Y'))
         return needs_dates

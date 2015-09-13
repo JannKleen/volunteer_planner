@@ -92,7 +92,7 @@ class RegistrationView(_RequestPassingFormView):
             return redirect(success_url)
 
     def registration_allowed(self, request):
-        print "registration is allowed ..............."
+        print 'registration is allowed ...............'
         """
         Override this to enable/disable user registration, either
         globally or on a per-request basis.
@@ -101,7 +101,7 @@ class RegistrationView(_RequestPassingFormView):
         return True
 
     def register(self, request, **cleaned_data):
-        print "trying to get register things ..............."
+        print 'trying to get register things ...............'
         """
         Implement user-registration logic here. Access to both the
         request and the full cleaned_data of the registration form is
@@ -138,7 +138,7 @@ class ActivationView(TemplateView):
         Implement account-activation logic here.
 
         """
-        print "activate function calles"
+        print 'activate function calles'
         raise NotImplementedError
 
     def get_success_url(self, request, user):

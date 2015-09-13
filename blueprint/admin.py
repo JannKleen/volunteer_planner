@@ -13,7 +13,7 @@ class BluePrintCreatorAdminForm(forms.ModelForm):
     def clean(self):
         try:
             if BluePrintCreator.objects.get(location=self.data['location']):
-                raise forms.ValidationError("Ort hat bereits eine Vorlage!")
+                raise forms.ValidationError('Ort hat bereits eine Vorlage!')
         except:
             return self.cleaned_data
 

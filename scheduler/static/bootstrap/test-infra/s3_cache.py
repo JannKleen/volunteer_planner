@@ -27,7 +27,7 @@ def timer():
     yield
     end = datetime.utcnow()
     elapsed = end - start
-    print("\tDone. Took", int(elapsed.total_seconds()), "second(s).")
+    print('\tDone. Took', int(elapsed.total_seconds()), 'second(s).')
 
 
 @contextmanager
@@ -45,7 +45,7 @@ def todo_file(writeback=True):
             with open(UPLOAD_TODO_FILE, 'wt') as json_file:
                 save(todo, json_file)
         except (OSError, IOError) as save_err:
-            print("Error saving {}:".format(UPLOAD_TODO_FILE), save_err)
+            print('Error saving {}:'.format(UPLOAD_TODO_FILE), save_err)
 
 
 def _sha256_of_file(filename):
@@ -81,7 +81,7 @@ def need_to_upload(cache_name):
 
 def _tarball_size(directory):
     kib = stat(_tarball_filename_for(directory)).st_size // BYTES_PER_MB
-    return "{} MiB".format(kib)
+    return '{} MiB'.format(kib)
 
 
 def _tarball_filename_for(directory):
@@ -89,13 +89,13 @@ def _tarball_filename_for(directory):
 
 
 def _create_tarball(directory):
-    print("Creating tarball of {}...".format(directory))
+    print('Creating tarball of {}...'.format(directory))
     with timer():
         run(['tar', '-czf', _tarball_filename_for(directory), '-C', dirname(directory), basename(directory)])
 
 
 def _extract_tarball(directory):
-    print("Extracting tarball of {}...".format(directory))
+    print('Extracting tarball of {}...'.format(directory))
     with timer():
         run(['tar', '-xzf', _tarball_filename_for(directory), '-C', dirname(directory)])
 
@@ -103,23 +103,23 @@ def _extract_tarball(directory):
 def download(directory):
     mark_uploaded(cache_name)  # reset
     try:
-        print("Downloading {} tarball from S3...".format(cache_name))
+        print('Downloading {} tarball from S3...'.format(cache_name))
         with timer():
             key.get_contents_to_filename(_tarball_filename_for(directory))
     except S3ResponseError as err:
         mark_needs_uploading(cache_name)
-        raise SystemExit("Cached {} download failed!".format(cache_name))
-    print("Downloaded {}.".format(_tarball_size(directory)))
+        raise SystemExit('Cached {} download failed!'.format(cache_name))
+    print('Downloaded {}.'.format(_tarball_size(directory)))
     _extract_tarball(directory)
-    print("{} successfully installed from cache.".format(cache_name))
+    print('{} successfully installed from cache.'.format(cache_name))
 
 
 def upload(directory):
     _create_tarball(directory)
-    print("Uploading {} tarball to S3... ({})".format(cache_name, _tarball_size(directory)))
+    print('Uploading {} tarball to S3... ({})'.format(cache_name, _tarball_size(directory)))
     with timer():
         key.set_contents_from_filename(_tarball_filename_for(directory))
-    print("{} cache successfully updated.".format(cache_name))
+    print('{} cache successfully updated.'.format(cache_name))
     mark_uploaded(cache_name)
 
 
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     #   AWS_SECRET_ACCESS_KEY -- AWS Secret Access Key
     argv.pop(0)
     if len(argv) != 2:
-        raise SystemExit("USAGE: s3_cache.py <download | upload> <cache name>")
+        raise SystemExit('USAGE: s3_cache.py <download | upload> <cache name>')
     mode, cache_name = argv
     script_dir = dirname(realpath(__file__))
     chdir(script_dir)
@@ -138,27 +138,27 @@ if __name__ == '__main__':
             config = load(config_file)
     except (IOError, OSError, ValueError) as config_err:
         print(config_err)
-        raise SystemExit("Error when trying to load config from JSON file!")
+        raise SystemExit('Error when trying to load config from JSON file!')
 
     try:
         cache_info = config[cache_name]
-        key_file = expandvars(cache_info["key"])
-        fallback_cmd = cache_info["generate"]
-        directory = expandvars(cache_info["cache"])
+        key_file = expandvars(cache_info['key'])
+        fallback_cmd = cache_info['generate']
+        directory = expandvars(cache_info['cache'])
     except (TypeError, KeyError) as load_err:
         print(load_err)
-        raise SystemExit("Config for cache named {!r} is missing or malformed!".format(cache_name))
+        raise SystemExit('Config for cache named {!r} is missing or malformed!'.format(cache_name))
 
     try:
         try:
             BUCKET_NAME = environ['TWBS_S3_BUCKET']
         except KeyError:
-            raise SystemExit("TWBS_S3_BUCKET environment variable not set!")
+            raise SystemExit('TWBS_S3_BUCKET environment variable not set!')
 
         conn = S3Connection()
         bucket = conn.lookup(BUCKET_NAME)
         if bucket is None:
-            raise SystemExit("Could not access bucket!")
+            raise SystemExit('Could not access bucket!')
 
         key_file_hash = _sha256_of_file(key_file)
 
@@ -171,14 +171,14 @@ if __name__ == '__main__':
             if need_to_upload(cache_name):
                 upload(directory)
             else:
-                print("No need to upload anything.")
+                print('No need to upload anything.')
         else:
-            raise SystemExit("Unrecognized mode {!r}".format(mode))
+            raise SystemExit('Unrecognized mode {!r}'.format(mode))
     except BaseException as exc:
         if mode != 'download':
             raise
-        print("Error!:", exc)
-        print("Unable to download from cache.")
-        print("Running fallback command to generate cache directory {!r}: {}".format(directory, fallback_cmd))
+        print('Error!:', exc)
+        print('Unable to download from cache.')
+        print('Running fallback command to generate cache directory {!r}: {}'.format(directory, fallback_cmd))
         with timer():
             run(fallback_cmd, shell=True)
