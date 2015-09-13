@@ -1,3 +1,5 @@
+![Travis CI Build Status](https://travis-ci.org/volunteer-planner/volunteer_planner.svg?branch=master)
+
 # volunteer_planner
 This repro hosts the code for volunteer-planner.org. A platform to schedule shifts of volunteers.
 
