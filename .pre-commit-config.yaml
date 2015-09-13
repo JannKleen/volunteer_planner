@@ -10,5 +10,6 @@
     -   id: double-quote-string-fixer
     -   id: end-of-file-fixer
     -   id: flake8
+        args: ['--ignore=E501']
     -   id: requirements-txt-fixer
         args: ['requirements/_base.txt', 'requirements/dev.txt', 'requirements/dev_mysql.txt', 'requirements/production.txt']
