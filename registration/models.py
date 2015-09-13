@@ -5,7 +5,6 @@ import random
 import re
 import traceback
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
 from django.db import transaction
 from django.template.loader import render_to_string
@@ -18,7 +17,7 @@ try:
 except Exception as e:
     traceback.format_exc()
     print e
-    # from django.contrib.auth.models import User
+    from django.contrib.auth.models import User
 
 try:
     from django.utils.timezone import now as datetime_now
@@ -112,7 +111,7 @@ class RegistrationManager(models.Manager):
         username = user.username
         if isinstance(username, unicode):
             username = username.encode('utf-8')
-        activation_key = hashlib.sha1(salt+username).hexdigest()
+        activation_key = hashlib.sha1(salt + username).hexdigest()
         return self.create(user=user,
                            activation_key=activation_key)
 
